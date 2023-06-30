@@ -46,7 +46,7 @@ end
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
 	-- Minimap icon
-	inst.MiniMapEntity:SetIcon( "esctemplate.tex" )
+	inst.MiniMapEntity:SetIcon( "gramyuke.tex" )
 end
 
 -- This initializes for the server only. Components are added here.
