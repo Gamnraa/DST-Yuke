@@ -44,7 +44,7 @@ local STRINGS = GLOBAL.STRINGS
 STRINGS.CHARACTER_TITLES.gramyuke = "The Succubus"
 STRINGS.CHARACTER_NAMES.gramyuke = "Yuke"
 STRINGS.CHARACTER_DESCRIPTIONS.gramyuke = "Not normally afflicted by temperature\n*Heat makes her insane and powerful\n*Cold relaxes her but weakens her"
-STRINGS.CHARACTER_QUOTES.gramyuke = "\"That is not dead which can eternal lie, and with strange aeons even death may die\""
+STRINGS.CHARACTER_QUOTES.gramyuke = "\"That is not dead which can eternal lie, and with strange aeons even death may die.\""
 STRINGS.CHARACTER_SURVIVABILITY.gramyuke = "Slim"
 
 -- Custom speech strings
