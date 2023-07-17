@@ -28,14 +28,14 @@ local function ontemperaturechange(inst, data)
 	inst.components.sanity.dapperness = sanitydelta / 1000
 end
 
-local function setcustomrate
+local function setcustomrate(inst)
 	local delta = 0
-	ontemperaturechange(inst, {new = inst.components.tempareature.current})
+	ontemperaturechange(inst, {new = inst.components.temperature.current})
 	inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
 	inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
 	
-	if inst.components.freezable:IsFrozen() then delta = .1 end
-	elseif inst.components.burnable:IsBurning then
+	if inst.components.freezable:IsFrozen() then delta = .1 
+	elseif inst.components.burnable:IsBurning() then
 		delta = -.1
 		inst.components.combat.damagemultiplier = inst.components.combat.damagemultiplier + 1
 		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
