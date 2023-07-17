@@ -4,17 +4,20 @@ PrefabFiles = {
 }
 
 Assets = {
-    Asset( "IMAGE", "images/saveslot_portraits/gramyuke.tex" ),
+    --[[Asset( "IMAGE", "images/saveslot_portraits/gramyuke.tex" ),
     Asset( "ATLAS", "images/saveslot_portraits/gramyuke.xml" ),
 
     Asset( "IMAGE", "images/selectscreen_portraits/gramyuke.tex" ),
     Asset( "ATLAS", "images/selectscreen_portraits/gramyuke.xml" ),
 	
     Asset( "IMAGE", "images/selectscreen_portraits/gramyuke_silho.tex" ),
-    Asset( "ATLAS", "images/selectscreen_portraits/gramyuke_silho.xml" ),
-
-    Asset( "IMAGE", "bigportraits/gramyuke.tex" ),
+    Asset( "ATLAS", "images/selectscreen_portraits/gramyuke_silho.xml" ),]]
+	
+	Asset( "IMAGE", "bigportraits/gramyuke.tex" ),
     Asset( "ATLAS", "bigportraits/gramyuke.xml" ),
+	
+    Asset( "IMAGE", "bigportraits/gramyuke_none.tex" ),
+    Asset( "ATLAS", "bigportraits/gramyuke_none.xml" ),
 	
 	Asset( "IMAGE", "images/map_icons/gramyuke.tex" ),
 	Asset( "ATLAS", "images/map_icons/gramyuke.xml" ),
@@ -33,6 +36,9 @@ Assets = {
 	
 	Asset( "IMAGE", "images/names_gold_gramyuke.tex" ),
     Asset( "ATLAS", "images/names_gold_gramyuke.xml" ),
+	
+	Asset("SOUNDPACKAGE", "sound/gramyuke.fev"),
+	Asset("SOUND", "sound/gramyuke.fsb"),
 }
 
 AddMinimapAtlas("images/map_icons/gramyuke.xml")
@@ -65,6 +71,17 @@ local skin_modes = {
         offset = { 0, -25 } 
     },
 }
+
+RemapSoundEvent( "dontstarve/characters/gramyuke/death_voice", "gramyuke/characters/gramyuke/death_voice" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/hurt", "gramyuke/characters/gramyuke/hurt" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/emote", "gramyuke/characters/gramyuke/emote" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/yawn", "gramyuke/characters/gramyuke/yawn" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/pose", "gramyuke/characters/gramyuke/pose" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/ghost_LP", "gramyuke/characters/gramyuke/ghost_LP" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/talk_LP", "gramyuke/characters/gramyuke/talk_LP" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/carol", "gramyuke/characters/gramyuke/carol" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/eye_rub_vo", "gramyuke/characters/gramyuke/eye_rub_vo" )
+RemapSoundEvent( "dontstarve/characters/gramyuke/sinking", "gramyuke/characters//gramyuke/sinking" )
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("gramyuke", "FEMALE", skin_modes)

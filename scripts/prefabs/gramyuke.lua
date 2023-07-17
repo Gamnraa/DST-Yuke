@@ -19,6 +19,30 @@ for k, v in pairs(TUNING.GAMEMODE_STARTING_ITEMS) do
 end
 local prefabs = FlattenTree(start_inv, true)
 
+local function ontemperaturechange(inst, data)
+	local sanitydelta = TUNING.STARTING_TEMP - data.new
+	local combatmod = sanitydelta / 3
+	
+	print("sanitydelta", sanitydelta, "combatmod", combatmod)
+	inst.components.combat.damagemultiplier = combatmod ~= 0 and combatmod or 1
+	inst.components.sanity.dapperness = sanitydelta / 1000
+end
+
+local function setcustomrate
+	local delta = 0
+	ontemperaturechange(inst, {new = inst.components.tempareature.current})
+	inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
+	inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
+	
+	if inst.components.freezable:IsFrozen() then delta = .1 end
+	elseif inst.components.burnable:IsBurning then
+		delta = -.1
+		inst.components.combat.damagemultiplier = inst.components.combat.damagemultiplier + 1
+		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
+		inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
+	end
+end	
+
 -- When the character is revived from human
 local function onbecamehuman(inst)
 	-- Set speed when not a ghost (optional)
@@ -55,7 +79,7 @@ local master_postinit = function(inst)
     inst.starting_inventory = start_inv[TheNet:GetServerGameMode()] or start_inv.default
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "willow"
+	inst.soundsname = "gramyuke"
 	
 	-- Uncomment if "wathgrithr"(Wigfrid) or "webber" voice is used
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
@@ -64,6 +88,7 @@ local master_postinit = function(inst)
 	inst.components.health:SetMaxHealth(TUNING.GRAMYUKE_HEALTH)
 	inst.components.hunger:SetMax(TUNING.GRAMYUKE_HUNGER)
 	inst.components.sanity:SetMax(TUNING.GRAMYUKE_SANITY)
+	inst.components.sanity.custom_rate_fn = setcustomrate
 	
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1

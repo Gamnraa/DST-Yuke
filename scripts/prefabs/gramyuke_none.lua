@@ -1,13 +1,13 @@
 local assets =
 {
-	Asset( "ANIM", "anim/esctemplate.zip" ),
-	Asset( "ANIM", "anim/ghost_esctemplate_build.zip" ),
+	Asset( "ANIM", "anim/gramyuke.zip" ),
+	Asset( "ANIM", "anim/ghost_gramyuke_build.zip" ),
 }
 
 local skins =
 {
-	normal_skin = "esctemplate",
-	ghost_skin = "ghost_esctemplate_build",
+	normal_skin = "gramyuke",
+	ghost_skin = "ghost_gramyuke_build",
 }
 
 return CreatePrefabSkin("gramyuke_none",
