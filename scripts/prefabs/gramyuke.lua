@@ -20,12 +20,17 @@ end
 local prefabs = FlattenTree(start_inv, true)
 
 local function ontemperaturechange(inst, data)
-	local sanitydelta = TUNING.STARTING_TEMP - data.new
-	local combatmod = sanitydelta / 3
+	inst.components.combat.damagemultiplier = 1
+	inst.components.sanity.dapperness = 0
 	
-	print("sanitydelta", sanitydelta, "combatmod", combatmod)
-	inst.components.combat.damagemultiplier = combatmod ~= 0 and combatmod or 1
-	inst.components.sanity.dapperness = sanitydelta / 1000
+	local sanitydelta = TUNING.STARTING_TEMP - data.new
+	if not (sanitydelta > -4 and sanitydelta < 4) then
+		local combatmod = sanitydelta / -10
+		
+		print("sanitydelta", sanitydelta / 100, "combatmod", combatmod)
+		inst.components.combat.damagemultiplier = combatmod ~= 0 and combatmod or 1
+		inst.components.sanity.dapperness = sanitydelta / 250
+	end
 end
 
 local function setcustomrate(inst)
@@ -41,6 +46,7 @@ local function setcustomrate(inst)
 		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
 		inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
 	end
+	return delta
 end	
 
 -- When the character is revived from human
