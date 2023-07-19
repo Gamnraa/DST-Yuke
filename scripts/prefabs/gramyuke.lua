@@ -26,12 +26,11 @@ local function ontemperaturechange(inst, data)
 	local sanitydelta = (TUNING.STARTING_TEMP - data.new)
 	if not (sanitydelta > -4 and sanitydelta < 4) then
 		sanitydelta = sanitydelta / 100
-		local combatmod = 1 
-		combatmod = combatmod + (sanitydelta * -1)
+		local combatmod = 1 + (sanitydelta * -1)
 		
 		
 		print("sanitydelta", sanitydelta, "combatmod", combatmod)
-		inst.components.combat.damagemultiplier = combatmod ~= 0 and combatmod or 1
+		inst.components.combat.damagemultiplier = combatmod > 0 and combatmod or .25
 		inst.components.sanity.dapperness = sanitydelta
 	end
 end
@@ -42,9 +41,9 @@ local function setcustomrate(inst)
 	inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED)
 	inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED)
 	
-	if inst.components.freezable:IsFrozen() then delta = .1 
+	if inst.components.freezable:IsFrozen() then delta = .5 
 	elseif inst.components.burnable:IsBurning() then
-		delta = -.1
+		delta = -.5
 		inst.components.combat.damagemultiplier = inst.components.combat.damagemultiplier + 1
 		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
 		inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
@@ -95,6 +94,8 @@ local master_postinit = function(inst)
 	
 	-- Stats	
 	inst.components.health:SetMaxHealth(TUNING.GRAMYUKE_HEALTH)
+	inst.components.health.fire_damage_scale = TUNING.WILLOW_FIRE_DAMAGE
+    
 	inst.components.hunger:SetMax(TUNING.GRAMYUKE_HUNGER)
 	inst.components.sanity:SetMax(TUNING.GRAMYUKE_SANITY)
 	inst.components.sanity.custom_rate_fn = setcustomrate
@@ -104,6 +105,9 @@ local master_postinit = function(inst)
 	
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
+
+	inst.components.temperature.inherentinsulation = 75
+	inst.components.temperature.inherentsummerinsulation = 75
 	
 	inst.OnLoad = onload
     inst.OnNewSpawn = onload
