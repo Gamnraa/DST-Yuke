@@ -23,21 +23,24 @@ local function ontemperaturechange(inst, data)
 	inst.components.combat.damagemultiplier = 1
 	inst.components.sanity.dapperness = 0
 	
-	local sanitydelta = TUNING.STARTING_TEMP - data.new
+	local sanitydelta = (TUNING.STARTING_TEMP - data.new)
 	if not (sanitydelta > -4 and sanitydelta < 4) then
-		local combatmod = sanitydelta / -10
+		sanitydelta = sanitydelta / 100
+		local combatmod = 1 
+		combatmod = combatmod + (sanitydelta * -1)
 		
-		print("sanitydelta", sanitydelta / 100, "combatmod", combatmod)
+		
+		print("sanitydelta", sanitydelta, "combatmod", combatmod)
 		inst.components.combat.damagemultiplier = combatmod ~= 0 and combatmod or 1
-		inst.components.sanity.dapperness = sanitydelta / 250
+		inst.components.sanity.dapperness = sanitydelta
 	end
 end
 
 local function setcustomrate(inst)
 	local delta = 0
 	ontemperaturechange(inst, {new = inst.components.temperature.current})
-	inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
-	inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
+	inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED)
+	inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED)
 	
 	if inst.components.freezable:IsFrozen() then delta = .1 
 	elseif inst.components.burnable:IsBurning() then
