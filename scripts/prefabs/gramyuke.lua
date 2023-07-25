@@ -30,7 +30,7 @@ local function ontemperaturechange(inst, data)
 		local combatmod = 1 + (sanitydelta * -1)
 		
 		
-		print("sanitydelta", sanitydelta, "combatmod", combatmod)
+		--print("sanitydelta", sanitydelta, "combatmod", combatmod)
 		inst.components.combat.damagemultiplier = combatmod > 0 and combatmod or .25
 		inst.components.sanity.dapperness = sanitydelta
 	end
@@ -46,8 +46,8 @@ local function setcustomrate(inst)
 	elseif inst.components.burnable:IsBurning() then
 		delta = -.5
 		inst.components.combat.damagemultiplier = inst.components.combat.damagemultiplier + 1
-		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.5)
-		inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.5)
+		inst.components.locomotor.walkspeed = (TUNING.WILSON_WALK_SPEED * 1.75)
+		inst.components.locomotor.runspeed = (TUNING.WILSON_RUN_SPEED * 1.75)
 	end
 	return delta
 end	
