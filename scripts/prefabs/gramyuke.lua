@@ -11,6 +11,7 @@ TUNING.GRAMYUKE_SANITY = 200
 
 -- Custom starting inventory
 TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.GRAMYUKE = {
+	"ster"
 }
 
 local start_inv = {}
@@ -78,6 +79,7 @@ end
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
 	-- Minimap icon
+	inst:AddTag("gramyuke")
 	inst.MiniMapEntity:SetIcon( "gramyuke.tex" )
 end
 

@@ -3,8 +3,11 @@
     <folder id="0" name="ster">
         <file id="0" name="star-0.png" width="133" height="135" pivot_x="0.299344" pivot_y="0.262758"/>
     </folder>
-    <folder id="1" name="swap_ster">
+    <folder id="1">
         <file id="0" name="star-0.png" width="133" height="135" pivot_x="0.503328" pivot_y="0.488535"/>
+    </folder>
+    <folder id="2" name="swap_ster">
+        <file id="0" name="star-0.png" width="133" height="135" pivot_x="0.518657" pivot_y="0.1875"/>
     </folder>
     <entity id="0" name="ster">
         <animation id="0" name="idle" length="1000" interval="100">
@@ -42,16 +45,30 @@
                     <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="0"/>
                 </key>
                 <key id="1" time="166">
-                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="89.503502" scale_y="1"/>
+                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="89.503502"/>
                 </key>
                 <key id="2" time="333">
-                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="179.756217" scale_y="1"/>
+                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="179.756217"/>
                 </key>
                 <key id="3" time="500">
-                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="270.481627" scale_x="1"/>
+                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="270.481627"/>
                 </key>
                 <key id="4" time="666" spin="-1">
-                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="0.058853" scale_x="1"/>
+                    <object folder="1" file="0" x="-0.627566" y="-0.344733" angle="0.058853"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+    <entity id="1" name="swap_ster">
+        <animation id="0" name="BUILD" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="star-0">
+                <key id="0" spin="0">
+                    <object folder="2" file="0" x="0.981343" y="-4.6875"/>
                 </key>
             </timeline>
         </animation>

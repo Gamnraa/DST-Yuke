@@ -93,7 +93,7 @@ local function fn()
     end
 
     inst:AddComponent("weapon")
-    inst.components.weapon:SetDamage(18)
+    inst.components.weapon:SetDamage(22)
     inst.components.weapon:SetRange(20, 21)
     -------
 
@@ -114,7 +114,24 @@ local function fn()
 
     MakeHauntableLaunch(inst)
 
+    inst.components.inventoryitem.onputininventoryfn = function(inst, player)
+		if player.components.inventory then
+			local gowner = inst.components.inventoryitem:GetGrandOwner()
+			if gowner.components.inventory and not gowner:HasTag("gramyuke") then
+				inst:DoTaskInTime(0.1, function()
+					gowner.components.inventory:DropItem(inst)
+					if gowner:HasTag("player") then
+						gowner.components.talker:Say("I can't use this!")
+					end
+				end)
+			end
+		end
+	end
+
     return inst
 end
 
+STRINGS.NAMES.STER = "Throwing Star"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.STER = "A throwable star?"
+STRINGS.CHARACTERS.GRAMYUKE.DESCRIBE.STER = "Looking sharp!"
 return Prefab("ster", fn, assets)

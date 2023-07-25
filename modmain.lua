@@ -37,6 +37,9 @@ Assets = {
 	
 	Asset( "IMAGE", "images/names_gold_gramyuke.tex" ),
     Asset( "ATLAS", "images/names_gold_gramyuke.xml" ),
+
+    Asset( "IMAGE", "images/inventoryimages/ster.tex" ),
+	Asset( "ATLAS", "images/inventoryimages/ster.xml" ),
 	
 	Asset("SOUNDPACKAGE", "sound/gramyuke.fev"),
 	Asset("SOUND", "sound/gramyuke.fsb"),
@@ -50,7 +53,7 @@ local STRINGS = GLOBAL.STRINGS
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.gramyuke = "The Succubus"
 STRINGS.CHARACTER_NAMES.gramyuke = "Yuke"
-STRINGS.CHARACTER_DESCRIPTIONS.gramyuke = "Not normally afflicted by temperature\n*Heat makes her insane and powerful\n*Cold relaxes her but weakens her"
+STRINGS.CHARACTER_DESCRIPTIONS.gramyuke = "*Not normally afflicted by temperature\n*Heat makes her insane and powerful\n*Cold relaxes her but weakens her"
 STRINGS.CHARACTER_QUOTES.gramyuke = "\"That is not dead which can eternal lie, and with strange aeons even death may die.\""
 STRINGS.CHARACTER_SURVIVABILITY.gramyuke = "Slim"
 
@@ -86,3 +89,19 @@ RemapSoundEvent( "dontstarve/characters/gramyuke/sinking", "gramyuke/characters/
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("gramyuke", "FEMALE", skin_modes)
+
+
+RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/inventoryimages/ster.xml"), "ster.tex")
+AddCharacterRecipe("ster",
+    {Ingredient("goldnugget", 5)},
+    GLOBAL.TECH.NONE,
+    {
+        product = "ster",
+        builder_tag = "gramyuke",
+        numtogive = 1
+    },
+    {
+        "WEAPONS"
+    }
+)
+STRINGS.RECIPE_DESC.STER = "Yuke's special weapon."
