@@ -1,6 +1,7 @@
 PrefabFiles = {
 	"gramyuke",
 	"gramyuke_none",
+    "ster"
 }
 
 Assets = {
