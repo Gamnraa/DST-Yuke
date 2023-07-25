@@ -3,6 +3,62 @@ local assets =
     Asset("ANIM", "anim/ster.zip"),
 }
 
+local function onremovelight(light)
+    light._lantern._light = nil
+end
+
+local function stoptrackingowner(inst)
+    if inst._owner ~= nil then
+        inst:RemoveEventCallback("equip", inst._onownerequip, inst._owner)
+        inst._owner = nil
+    end
+end
+
+local function starttrackingowner(inst, owner)
+    if owner ~= inst._owner then
+        stoptrackingowner(inst)
+        if owner ~= nil and owner.components.inventory ~= nil then
+            inst._owner = owner
+            inst:ListenForEvent("equip", inst._onownerequip, owner)
+        end
+    end
+end
+
+local function TurnOn(inst)
+
+    local owner = inst.components.inventoryitem.owner
+
+    if inst._light == nil then
+        inst._light = SpawnPrefab("lanternlight")
+        inst._light._lantern = inst
+        inst._light.Light:SetIntensity(Lerp(.15, .15, .33))
+        inst._light.Light:SetRadius(Lerp(1, 3, .33))
+        inst._light.Light:SetFalloff(1)
+        inst:ListenForEvent("onremove", onremovelight, inst._light)
+    end
+    inst._light.entity:SetParent((owner or inst).entity)
+
+
+    if owner ~= nil and inst.components.equippable:IsEquipped() then
+        owner.AnimState:Show("LANTERN_OVERLAY")
+    end
+
+end
+
+local function TurnOff(inst)
+    stoptrackingowner(inst)
+
+
+    if inst._light ~= nil then
+        inst._light:Remove()
+    end
+
+    if inst.components.equippable:IsEquipped() then
+        inst.components.inventoryitem.owner.AnimState:Hide("LANTERN_OVERLAY")
+    end
+
+end
+
 local function OnFinished(inst)
     inst.AnimState:PlayAnimation("used")
     inst:ListenForEvent("animover", inst.Remove)
@@ -12,6 +68,7 @@ local function OnEquip(inst, owner)
     owner.AnimState:OverrideSymbol("swap_object", "ster", "swap_ster")
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
+    TurnOn(inst)
 end
 
 local AutoCatchTask = nil
@@ -24,6 +81,8 @@ local function OnDropped(inst)
 		AutoCatchTask:Cancel()
 		AutoCatchTask = nil
 	end
+    TurnOff(inst)
+    TurnOn(inst)
 end
 
 local function OnUnequip(inst, owner)
@@ -33,6 +92,7 @@ local function OnUnequip(inst, owner)
     if skin_build ~= nil then
         owner:PushEvent("unequipskinneditem", inst:GetSkinName())
     end
+    TurnOff(inst)
 end
 
 local function OnThrown(inst, owner, target)
@@ -41,6 +101,8 @@ local function OnThrown(inst, owner, target)
     end
     inst.AnimState:PlayAnimation("spin_loop", true)
     inst.components.inventoryitem.pushlandedevents = false
+    TurnOff(inst)
+    TurnOn(inst)
 end
 
 
@@ -59,6 +121,32 @@ local function OnHit(inst, owner, target)
     end
 end
 
+
+local function lightfn()
+    local inst = CreateEntity()
+
+    inst.entity:AddTransform()
+    inst.entity:AddLight()
+    inst.entity:AddSoundEmitter()
+    inst.entity:AddNetwork()
+
+    inst:AddTag("FX")
+
+    inst.Light:SetColour(180 / 255, 195 / 255, 150 / 255)
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
+    inst.persists = false
+
+    inst.OnEntityWake = OnLightWake
+    inst.OnEntitySleep = OnLightSleep
+
+    return inst
+end
 
 local function fn()
     local inst = CreateEntity()
@@ -134,4 +222,5 @@ end
 STRINGS.NAMES.STER = "Throwing Star"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.STER = "A throwable star?"
 STRINGS.CHARACTERS.GRAMYUKE.DESCRIBE.STER = "Looking sharp!"
-return Prefab("ster", fn, assets)
+return Prefab("ster", fn, assets),
+    Prefab("sterlight", lightfn)
