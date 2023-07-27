@@ -18,7 +18,7 @@ dont_starve_compatible = false
 reign_of_giants_compatible = false
 
 -- Character mods need this set to true
-all_clients_require_mod = false
+all_clients_require_mod = true
 
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
